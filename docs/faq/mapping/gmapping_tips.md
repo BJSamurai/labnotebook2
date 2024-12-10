@@ -16,7 +16,7 @@ Recommendations for gmapping parameters and location of it.
 
 gmapping is the most beginner friendly SLAM algorithm that is provided in ROS1. The limitation of gmapping is that it must used with robots that provide /scan rostopic (Lidar) and /odom rostopic (Odom). There's other options like Karto SLAM and Hector SLAM, but gmapping would be the one I'm choosing for my project.
 
-But gmapping with default parameters might not be appropriate for small environment like maze. Here's my recommend parameters for small environment. 
+But gmapping with default parameters might not be appropriate for all environment like maze. Here's my recommend parameters for small environment. 
 
 ## Instructions
 To change the parameters, you can modify: 
