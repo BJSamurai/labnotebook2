@@ -9,14 +9,14 @@ As autonomous driving is being adopted by all major EV companies, it is interest
 For the initial goal, 2 robots should be able to drive around in a known road system, and the robot that is closest to the passengers would go and pick them up. They will follow basic traffic rules like stopping for stop signs and signal lights, which are represented as Fiducials. They should also be able to handle scenarios like unexpected pedestrians crossing the street and clearing the way for emergency cars. However, later I found there was too much work for a solo project to work on 2 robots, so I decided to complete 1 robot following the traffic system.
 
 ## What was created
-Technical descriptions, illustrations
+### Technical descriptions, illustrations
 
 The robot operates in a mapped space containing several fiducials. These fiducials represent either signal lights or stop signs.
 For mapping the area, I use the gmapping method based on SLAM, implemented from an existing library. The robot navigates to its location using the move_base library.
 For fiducial recognition, I utilize the aruco_detect library. The fiducials' locations are stored in the robot's odometry system after being scanned by the robot's camera.
 For detecting unexpected objects or pedestrians on the street, the robot uses LIDAR to identify obstacles and plans new paths to avoid them.
 
-Discussion of interesting algorithms, modules, techniques
+### Discussion of interesting algorithms, modules, techniques
 
 1. Basic Mapping and Navigation
 For this project, I integrated three key components to achieve autonomous navigation: gmapping for environment mapping, move_base for path planning, and Lidar sensing for real-time perception. The gmapping package implements SLAM techniques to construct a global map as the robot explores it prior to navigation. Using LIDAR sensor data, the system captures any components that weren't scanned during the mapping phase and uses it to create a local map to avoid unmapped obstacles.
@@ -29,9 +29,39 @@ For stop sign management, the system maintains an array of vehicles waiting at t
 3. Pickup passengers
 For passenger management, the system maintains a queue of pickup and dropoff locations, each stored as XYZ coordinates. The robot processes these locations sequentially, navigating to each pickup/drop off point in order. Once a passenger location is reached, that destination is removed from the queue, and the robot proceeds to the next location. This simple yet effective system ensures orderly passenger service on a first-come-first-served basis.
 
-1. Guide on how to use the code written
-1. Clear description and tables of source files, nodes, messages, actions and so on
+### Guide on how to use the code written
+
+To run the program, use command
+```
+roslaunch ros_auto_taxi ros_auto_taxi.launch
+```
+
+To run the program by itself with demo passenger locations, use this command after run
+```
+rosrun ros_auto_taxi demo_day.py
+```
+
+### Clear description and tables of source files, nodes, messages, actions and so on
+
+| File name | Description |
+|----------|----------|
+| four_way_solo.py | include reaction towards signal/stop sign |
+| mapper_real.py | mapping fiducial location |
+| my_odom_solo.py | retrieve useful odom information |
+| signal_sim.py | publish signal lights shift |
+
+| Message Name | Description | Message Type |
+|-------------|-------------|--------------|
+| /scan | LIDAR scan data for obstacle detection and mapping | sensor_msgs/LaserScan |
+| /move_base/status | Navigation status updates from move_base | actionlib_msgs/GoalStatusArray |
+| /move_base/goal | Target pose for navigation | move_base_msgs/MoveBaseActionGoal |
+| /move_base/cancel | Cancel current navigation goal | actionlib_msgs/GoalID |
+| /cmd_vel | Robot velocity commands | geometry_msgs/Twist |
+| /signal_sim | Traffic light status updates | std_msgs/Bool |
+| /stop_sign_sim | Stop sign detection and management | std_msgs/Int32 |
+| /odom | Robot odometry data (position/velocity) | nav_msgs/Odometry |
+| /my_odom | A simplified odom topic | std_msgs/Float32MultiArray |
+
 ## Story of the project. 
 1. How it unfolded, how the team worked together
 1. Your own assessment
-1. problems that were solved, pivots that had to be taken
