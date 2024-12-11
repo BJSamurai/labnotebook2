@@ -64,4 +64,8 @@ rosrun ros_auto_taxi demo_day.py
 
 ## Story of the project. 
 1. How it unfolded, how the team worked together
-1. Your own assessment
+
+### Your own assessment
+The project successfully implements basic autonomous taxi functionality, demonstrating effective integration of mapping, navigation, and traffic rule compliance. The system achieves its core objectives of autonomous movement, traffic sign response, and passenger management.
+
+There are two main areas for potential improvement: implementing Computer Vision for more realistic traffic sign detection beyond fiducial markers, and expanding to a multi-robot system as originally envisioned. These enhancements would bring the system closer to real-world autonomous taxi operations.
